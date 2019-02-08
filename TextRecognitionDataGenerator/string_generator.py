@@ -75,6 +75,8 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
         Create all strings by randomly sampling from a pool of characters.
     """
 
+    length = 1
+
     # If none specified, use all three
     if True not in (let, num, sym):
         let, num, sym = True, True, True
@@ -83,6 +85,10 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
     if let:
         if lang == 'cn':
             pool += ''.join([chr(i) for i in range(19968, 40908)]) # Unicode range of CHK characters
+        if lang == 'ua':
+            uni_list = [1028, 1030, 1031, 1068, 1070, 1071, 1168]
+            pool += ''.join([chr(i) for i in range(1040, 1066)]) # Unicode range of UA characters
+            pool += ''.join([chr(i) for i in uni_list]) # Unicode range of UA characters
         else:
             pool += string.ascii_letters
     if num:
@@ -98,11 +104,15 @@ def create_strings_randomly(length, allow_variable, count, let, num, sym, lang):
         max_seq_len = 10
 
     strings = []
+    counter = 0
     for _ in range(0, count):
         current_string = ""
-        for _ in range(0, random.randint(1, length) if allow_variable else length):
-            seq_len = random.randint(min_seq_len, max_seq_len)
-            current_string += ''.join([random.choice(pool) for _ in range(seq_len)])
+        if counter == 33:
+            counter = 0
+        for _ in range(0, 1):
+            seq_len = 1
+            current_string += ''.join([pool[counter] for _ in range(seq_len)])
             current_string += ' '
+            counter = counter + 1
         strings.append(current_string[:-1])
     return strings

@@ -2,6 +2,7 @@ import argparse
 import os, errno
 import random
 import string
+import time
 
 from tqdm import tqdm
 from string_generator import (
@@ -256,6 +257,8 @@ def load_fonts(lang):
 
     if lang == 'cn':
         return [os.path.join('fonts/cn', font) for font in os.listdir('fonts/cn')]
+    if lang == 'ua':
+        return [os.path.join('fonts/ua', font) for font in os.listdir('fonts/ua')]
     else:
         return [os.path.join('fonts/latin', font) for font in os.listdir('fonts/latin')]
 

@@ -1,5 +1,6 @@
 import os
 import random
+import time
 
 from PIL import Image, ImageFilter
 
@@ -33,6 +34,8 @@ class FakeTextDataGenerator(object):
             image = HandwrittenTextGenerator.generate(text)
         else:
             image = ComputerTextGenerator.generate(text, font, text_color, size, orientation, space_width)
+
+        #print("\n" + font.split("\\", 1)[1])
 
         random_angle = random.randint(0-skewing_angle, skewing_angle)
 
@@ -120,14 +123,14 @@ class FakeTextDataGenerator(object):
         # Generate name for resulting image #
         #####################################
         if name_format == 0:
-            image_name = '{}_{}.{}'.format(text, str(index), extension)
+            image_name = '{}_{}_{}_{}.{}'.format(text, str(index), font.split("\\", 1)[1], time.time(), extension)
         elif name_format == 1:
-            image_name = '{}_{}.{}'.format(str(index), text, extension)
+            image_name = '{}_{}_{}_{}.{}'.format(str(index), text, font.split("\\", 1)[1], time.time(),extension)
         elif name_format == 2:
-            image_name = '{}.{}'.format(str(index),extension)
+            image_name = '{}.{}.{}.{}'.format(str(index),font.split("\\", 1)[1], time.time(),extension)
         else:
             print('{} is not a valid name format. Using default.'.format(name_format))
-            image_name = '{}_{}.{}'.format(text, str(index), extension)
+            image_name = '{}_{}_{}_{}.{}'.format(text, str(index), font.split("\\", 1)[1], time.time(),extension)
 
         # Save the image
         final_image.convert('RGB').save(os.path.join(out_dir, image_name))

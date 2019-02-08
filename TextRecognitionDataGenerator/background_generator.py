@@ -79,7 +79,7 @@ class BackgroundGenerator(object):
                 y = 0
             else:
                 y = random.randint(0, picture.size[1] - height)
-                
+
             return picture.crop(
                 (
                     x,
